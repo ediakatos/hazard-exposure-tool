@@ -25,14 +25,17 @@ clean:
 	@poetry env remove --all
 mask:
 	@echo "Running mask.."
-	@poetry run python -m src.prepare_hazard_mask
+	@poetry run python -m src.back_end.prepare_hazard_mask
 
 compute:
 	@echo "Running compute.."
-	@poetry run python -m src.compute_hazard
+	@poetry run python -m src.back_end.compute_hazard
 
 pipeline:	mask compute
 
+app:
+	@echo "Running Streamlit app..."
+	@PYTHONPATH=. poetry run streamlit run src/front_end/app.py
 
 help:
 	@echo "Available make commands for setup:"
@@ -42,4 +45,7 @@ help:
 	@echo " make test           - Run unit tests"
 	@echo " make lint           - Run lint tests"
 	@echo " make clean          - Remove .venv"
-	@echo ""
+	@echo " make mask           - Run the hazard mask preparation"
+	@echo " make compute        - Run hazard compute"
+	@echo " make pipeline       - Run mask and compute sequentially"
+	@echo " make app            - Run the Streamlit application"
