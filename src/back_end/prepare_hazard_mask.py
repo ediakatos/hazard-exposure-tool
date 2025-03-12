@@ -75,7 +75,10 @@ def compute_population_exposure(hazard_mask_raster: xr.core.dataarray.DataArray,
 
     return(pop_exp_raster)
 
-def main():
+def main()-> None:
+    """
+    Main function to prepare hazard mask for each hazard type
+    """
 
     for hazard in ['flood','earthquake','landslide']:
 
@@ -88,9 +91,10 @@ def main():
         population_exposure_raster.rio.to_raster(HAZARD_PREP_PATH[hazard]) 
 
         print(hazard+' hazard prep completed')
+    
+    return("Hazard mask preparation complete!")
 
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
