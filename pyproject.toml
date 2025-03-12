@@ -1,10 +1,11 @@
 [tool.poetry]
-name = "template-poetry"
+name = "hazard-exposure-tool"  # Change this to match your actual project name
 version = "0.1.0"
-description = "This project serves as a template for initialising new Python projects with Poetry, including basic configuration for dependency management and virtual environment setup. It is designed to be cloned for quick setup of new repositories on GitHub."
+description = "A Streamlit-based hazard exposure tool"
 authors = ["ediakatos <ediakatos@mapaction.org>"]
 license = "GPL-3.0-only"
 readme = "README.md"
+packages = [{ include = "src" }]  # Add this line to tell Poetry where your code is
 
 [tool.poetry.dependencies]
 python = "^3.10"
