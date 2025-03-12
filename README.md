@@ -1,51 +1,85 @@
-# hazard-exposure-tool
+# Hazard Processing Tool
 
-Disaster risk assessment is crucial for effective preparedness and response.
+This tool processes hazard-related data and outputs processed results in csv format for further visualisation. It is part of the hazard exposure workflow.
 
+## Project Structure
 
-### Setup
+The directory is organised as follows:
 
-clone repository
+- **admin_data**  
+  Contains administrative geographic data (GeoJSON files). These files serve as reference data for processing.
 
-```bash
-git clone git@github.com:mapaction/hazard-visualisation-tool.git
-```
+- **hazard_data**  
+  Contains raw hazard data from various hazards:
+  - **coastal_erosion**: Shapefile data.
+  - **cyclone**: TIFF images.
+  - **deforestation**: TIFF images.
+  - **earthquake**: TIFF images.
+  - **flood**: TIFF images.
+  - **landslide**: TIFF images.
 
-## install dependencies
+- **pop_data**  
+  Contains raw population data (TIFF format).
 
-```bash
-cd hazard-visualisation-tool
-poetry install --no-root
-```
+- **prep_data**  
+  Contains prepared data files that are used as input for processing.  
+  **Note:** Before running the pipeline, create this directory if it doesn't exist.
 
-## to run backend
-```bash
-flask --app app run
-```
+- **output_data**  
+  Contains processed CSV outputs for each hazard type.  
+  **Note:** Before running the pipeline, create this directory if it doesn't exist.
 
-### Data
+- **src**  
+  Contains the Python source code:
+  - `compute_hazard.py` and `prepare_hazard_mask.py` are the main scripts.
+  - **utils/**: Helper modules for data processing.
 
-##### Flood
+- **Makefile**, **pyproject.toml**, **poetry.toml**, and **poetry.lock**  
+  Files for managing dependencies and running pipeline commands.
 
-Sources used:
+## Getting Started
 
-The map depicts flood prone areas at global scale for flood events with 100-year return period. Resolution is 30 arcseconds (approx. 1km). Cell values indicate water depth (in m). The map can be used to assess flood exposure and risk of population and assets. NOTE: this dataset is based on JRC elaborations and is not an official flood hazard map (for details and limitations please refer to related publications).
+1. **Install Dependencies**
 
-[Flood hazard map of the World - 100-year return period](https://data.jrc.ec.europa.eu/dataset/jrc-floods-floodmapgl_rp100y-tif#dataaccess)
+   This project uses [Poetry](https://python-poetry.org/) for dependency management.  
+   Run:
+   ```sh
+   poetry install
+   ```
 
-##### Lebanon
+2. **Prepare Directories**
 
-[Lebanon - Population Counts](https://data.humdata.org/dataset/worldpop-population-counts-for-lebanon)
+   Before running the processing pipeline, ensure that the following directories exist:
+   - `prep_data`
+   - `output_data`
+   
+   If they do not exist, create them by running:
+   ```sh
+   mkdir -p prep_data output_data
+   ```
 
-https://data.humdata.org/dataset/cod-ab-lbn
+3. **Raw Data**
 
+   The raw data is supplied from:
+   - `admin_data`
+   - `hazard_data`
+   - `pop_data`
 
-##### HDX API
+   Ensure that these directories contain the expected data files as shown in the project structure.
 
-:book: [Docs](https://hdx-hapi.readthedocs.io/en/latest/)
+4. **Run the Pipeline**
 
-:book: [API](https://hapi.humdata.org/docs#/Utility/get_encoded_identifier_api_v1_encode_identifier_get)
+   Use the provided Makefile to run the processing pipeline. For example, you might run:
+   ```sh
+   make pipeline
+   ```
 
-:gear: [HXLStandard/libhxl-python](https://github.com/HXLStandard/libhxl-python)
+   This command processes the input files from `admin_data`, `hazard_data`, and `pop_data` and generates outputs in `output_data` (and intermediate files in `prep_data`).
 
-:package: [libhxl](https://pypi.org/project/libhxl/)
+## Contributing
+
+Feel free to open issues or submit pull requests if you encounter any problems or have suggestions for improvements.
+
+## License
+
+This project is distributed under the terms of the [LICENSE](LICENSE) file.
